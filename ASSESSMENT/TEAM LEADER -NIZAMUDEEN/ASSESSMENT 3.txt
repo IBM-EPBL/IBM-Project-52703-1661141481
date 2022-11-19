@@ -1,0 +1,197 @@
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense
+
+from tensorflow.keras.layers import Convolution2D
+from tensorflow.keras.layers import MaxPooling2D
+from tensorflow.keras.layers import Flatten
+
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
+
+train_datagen = ImageDataGenerator(rescale=1./255,shear_range=0.2,zoom_range=0.2,horizontal_flip=True,vertical_flip=True)
+
+test_datagen = ImageDataGenerator(rescale=1./255)
+
+x_train = train_datagen.flow_from_directory(r"D:\Dataset\flowers\Training",target_size=(64,64),batch_size=32,class_mode="categorical")
+
+Found 4317 images belonging to 5 classes.
+
+x_test = test_datagen.flow_from_directory(r"D:\Dataset\flowers\Testing",target_size=(64,64),batch_size=32,class_mode = "categorical")
+
+Found 4317 images belonging to 5 classes.
+
+x_train.class_indices
+
+{'daisy': 0, 'dandelion': 1, 'rose': 2, 'sunflower': 3, 'tulip': 4}
+
+model = Sequential()
+
+model.add(Convolution2D(32,(3,3),input_shape=(64,64,3),activation='relu'))
+
+model.add(MaxPooling2D(pool_size=(2,2)))
+
+model.add(Flatten())
+
+model.add(Dense(units=300,kernel_initializer="random_uniform",activation="relu"))
+
+model.add(Dense(units=200,kernel_initializer="random_uniform",activation="relu"))
+
+model.add(Dense(units=5,kernel_initializer="random_uniform",activation="softmax"))
+
+model.compile(loss="categorical_crossentropy",optimizer="adam",metrics=["accuracy"])
+
+model.fit_generator(x_train,steps_per_epoch=39,epochs=25,validation_data=x_test,validation_steps=10)
+
+C:\Users\S.V.D.H.E.N.P\AppData\Local\Temp\ipykernel_91844\3505885595.py:1: UserWarning: `Model.fit_generator` is deprecated and will be removed in a future version. Please use `Model.fit`, which supports generators.
+  model.fit_generator(x_train,steps_per_epoch=39,epochs=25,validation_data=x_test,validation_steps=10)
+
+Epoch 1/25
+39/39 [==============================] - 41s 772ms/step - loss: 1.4446 - accuracy: 0.3438 - val_loss: 1.4007 - val_accuracy: 0.4125
+Epoch 2/25
+39/39 [==============================] - 25s 649ms/step - loss: 1.2575 - accuracy: 0.4426 - val_loss: 1.2572 - val_accuracy: 0.4500
+Epoch 3/25
+39/39 [==============================] - 23s 582ms/step - loss: 1.2013 - accuracy: 0.4867 - val_loss: 1.1840 - val_accuracy: 0.5094
+Epoch 4/25
+39/39 [==============================] - 21s 527ms/step - loss: 1.0973 - accuracy: 0.5361 - val_loss: 1.2075 - val_accuracy: 0.4906
+Epoch 5/25
+39/39 [==============================] - 19s 491ms/step - loss: 1.0953 - accuracy: 0.5296 - val_loss: 1.0235 - val_accuracy: 0.5938
+Epoch 6/25
+39/39 [==============================] - 19s 481ms/step - loss: 1.0592 - accuracy: 0.5873 - val_loss: 1.0561 - val_accuracy: 0.5625
+Epoch 7/25
+39/39 [==============================] - 16s 416ms/step - loss: 1.0648 - accuracy: 0.5743 - val_loss: 1.2361 - val_accuracy: 0.5500
+Epoch 8/25
+39/39 [==============================] - 17s 439ms/step - loss: 1.0192 - accuracy: 0.6026 - val_loss: 1.0726 - val_accuracy: 0.5688
+Epoch 9/25
+39/39 [==============================] - 17s 429ms/step - loss: 1.0565 - accuracy: 0.5817 - val_loss: 1.1160 - val_accuracy: 0.5312
+Epoch 10/25
+39/39 [==============================] - 16s 412ms/step - loss: 0.9856 - accuracy: 0.6082 - val_loss: 1.2276 - val_accuracy: 0.4969
+Epoch 11/25
+39/39 [==============================] - 16s 406ms/step - loss: 0.9817 - accuracy: 0.5968 - val_loss: 1.0653 - val_accuracy: 0.6000
+Epoch 12/25
+39/39 [==============================] - 16s 408ms/step - loss: 0.9348 - accuracy: 0.6514 - val_loss: 0.9196 - val_accuracy: 0.6313
+Epoch 13/25
+39/39 [==============================] - 15s 390ms/step - loss: 0.8876 - accuracy: 0.6474 - val_loss: 0.8719 - val_accuracy: 0.6750
+Epoch 14/25
+39/39 [==============================] - 15s 389ms/step - loss: 0.9038 - accuracy: 0.6450 - val_loss: 0.9047 - val_accuracy: 0.6562
+Epoch 15/25
+39/39 [==============================] - 16s 398ms/step - loss: 0.9064 - accuracy: 0.6434 - val_loss: 0.7802 - val_accuracy: 0.6969
+Epoch 16/25
+39/39 [==============================] - 15s 387ms/step - loss: 0.8594 - accuracy: 0.6827 - val_loss: 0.9983 - val_accuracy: 0.6219
+Epoch 17/25
+39/39 [==============================] - 14s 369ms/step - loss: 0.9175 - accuracy: 0.6530 - val_loss: 1.0273 - val_accuracy: 0.6062
+Epoch 18/25
+39/39 [==============================] - 14s 368ms/step - loss: 0.8942 - accuracy: 0.6635 - val_loss: 0.8612 - val_accuracy: 0.6719
+Epoch 19/25
+39/39 [==============================] - 15s 374ms/step - loss: 0.8763 - accuracy: 0.6731 - val_loss: 0.7874 - val_accuracy: 0.7031
+Epoch 20/25
+39/39 [==============================] - 14s 363ms/step - loss: 0.8364 - accuracy: 0.6956 - val_loss: 0.8431 - val_accuracy: 0.6469
+Epoch 21/25
+39/39 [==============================] - 15s 371ms/step - loss: 0.8235 - accuracy: 0.6899 - val_loss: 0.9080 - val_accuracy: 0.6375
+Epoch 22/25
+39/39 [==============================] - 14s 364ms/step - loss: 0.8146 - accuracy: 0.6867 - val_loss: 0.7422 - val_accuracy: 0.7000
+Epoch 23/25
+39/39 [==============================] - 15s 373ms/step - loss: 0.8174 - accuracy: 0.6972 - val_loss: 0.7344 - val_accuracy: 0.7188
+Epoch 24/25
+39/39 [==============================] - 14s 359ms/step - loss: 0.8173 - accuracy: 0.6835 - val_loss: 0.8216 - val_accuracy: 0.6438
+Epoch 25/25
+39/39 [==============================] - 14s 360ms/step - loss: 0.7858 - accuracy: 0.7100 - val_loss: 0.8219 - val_accuracy: 0.6750
+
+model.save("Flowers.h5")
+
+from tensorflow.keras.models import load_model
+
+from tensorflow.keras.preprocessing import image
+
+import numpy as np
+
+model = load_model("Flowers.h5")
+
+img = image.load_img(r"C:\Users\S.V.D.H.E.N.P\Pictures\Saved Pictures\Daisy.jpg",target_size=(64,64))
+
+img
+
+type(img)
+
+PIL.Image.Image
+
+x = image.img_to_array(img)
+
+x
+
+array([[[0., 0., 0.],
+        [0., 0., 0.],
+        [0., 0., 0.],
+        ...,
+        [0., 0., 0.],
+        [0., 0., 0.],
+        [0., 0., 0.]],
+
+       [[0., 0., 0.],
+        [0., 0., 0.],
+        [0., 0., 0.],
+        ...,
+        [0., 0., 0.],
+        [0., 0., 0.],
+        [0., 0., 0.]],
+
+       [[0., 0., 0.],
+        [0., 0., 0.],
+        [0., 0., 0.],
+        ...,
+        [0., 0., 0.],
+        [0., 0., 0.],
+        [0., 0., 0.]],
+
+       ...,
+
+       [[0., 0., 0.],
+        [0., 0., 0.],
+        [1., 1., 1.],
+        ...,
+        [0., 0., 0.],
+        [0., 0., 0.],
+        [0., 0., 0.]],
+
+       [[0., 0., 0.],
+        [0., 0., 0.],
+        [0., 0., 0.],
+        ...,
+        [0., 0., 0.],
+        [0., 0., 0.],
+        [0., 0., 0.]],
+
+       [[1., 1., 1.],
+        [0., 0., 0.],
+        [0., 0., 0.],
+        ...,
+        [0., 0., 0.],
+        [0., 0., 0.],
+        [0., 0., 0.]]], dtype=float32)
+
+x.shape
+
+(64, 64, 3)
+
+x = np.expand_dims(x,axis=0)
+
+x.shape
+
+(1, 64, 64, 3)
+
+pred_prob = model.predict(x)
+
+1/1 [==============================] - 0s 467ms/step
+
+pred_prob
+
+array([[1., 0., 0., 0., 0.]], dtype=float32)
+
+class_name=["Daisy","Dandelion","Rose","Sunflower","Tulip"]
+pred_id = pred_prob.argmax(axis = 1)[0]
+
+pred_id
+
+0
+
+print("Predicted Flower is ",str(class_name[pred_id]))
+
+Predicted Flower is  Daisy
