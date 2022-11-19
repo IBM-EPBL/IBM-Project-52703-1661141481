@@ -1,7 +1,7 @@
 1.	Split this string
 
 Basic Python
-s = "Hi there seenu!" print(s.split())
+s = "Hi there molieshwaran!" print(s.split())
 ['Hi', 'there', ' moulieshwaran!']
 
 
